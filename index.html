@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-image: url(https://upload.wikimedia.org/wikipedia/commons/d/d6/WarpTrails001.gif);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .container{
+            /* border: 2px solid red; */
+            width: 30%;
+            margin: auto;
+           display: flex;
+           flex-direction: column;
+           margin-top: 150px;
+           /* line-height: 50px; */
+        }
+        .container>img{
+            width:50%;
+            /* height: ; */
+            margin: auto;
+            margin-bottom: 30px;
+        }
+        input{
+            width:90%;
+            height: 40px;
+            border-radius: 20px;
+            background-color: #2D2F30;
+            border: none;
+            padding: 10px;
+            color: white;
+            outline: none;
+            background-color: transparent;
+            font-size: 15px;
+        }
+        #result{
+            width: 120%;
+            max-height: 300px;
+            overflow-y: scroll;
+        }
+        #result::-webkit-scrollbar {
+            width: 10px;
+            background-color: transparent;
+        }
+
+        #result::-webkit-scrollbar-thumb {
+            border-radius: 25px;
+            /* background-color: black; */
+            background: linear-gradient(black, grey);
+        }
+        #result>div{
+            color: white;
+            font-size: 15px;
+            /* border: 2px solid red; */
+            gap:10px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(2, 2, 2, 0.893) 0px 30px 60px -30px, rgba(0, 0, 0, 0.928) 0px -2px 6px 0px inset;
+            padding: 5px;
+            border-radius: 15px;
+   
+        }
+        #result>div:hover{
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(231, 227, 227, 0.893) 0px 30px 60px -30px, rgba(229, 232, 235, 0.593) 0px -2px 6px 0px inset;
+            cursor: pointer;
+        }
+        #result>div>div{
+            color: white;
+            font-size: 15px;
+            display: flex;
+            justify-content: space-between;
+            /* border: 2px solid blue; */
+        }
+        .naveen{
+            background-color: #2D2F30;
+            width: 120%;
+            height: 60px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        #nave{
+            background-color: yellow;
+            
+            height: 15px;
+            width: 15px;
+            margin-left: -40px;
+            padding: 10px;
+            border-radius: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="logo.png" alt="">
+        <div class="naveen">
+            <input type="text" placeholder="Search Characters" id="query" oninput="debouncing(main,1000)">
+            <svg id="nave" stroke="currentColor" fill="black" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"></path><path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"></path></svg>
+        </div>
+       
+        <div id="result"></div>
+    </div>
+</body>
+</html>
+<script>
+    // https://swapi.dev/api/people/?search=${query}
+  let id;
+   async function getData(){
+        let query = document.getElementById("query").value 
+        let url = `https://swapi.dev/api/people/?search=${query}`
+        let res = await fetch(url);
+        let data = await res.json();
+        console.log(data);
+        return data.results
+    }
+
+    function append(data){
+        let cont = document.getElementById("result");
+        cont.innerHTML = null;
+        data.forEach(function(el){
+            let maindiv = document.createElement("div")
+            let div = document.createElement("div")
+            let p = document.createElement("p")
+            p.innerText = el.name
+            let p1 = document.createElement("p")
+            p1.innerText = el.gender
+            let p2 = document.createElement("p")
+            p2.innerText = el.birth_year
+            maindiv.addEventListener("click",function(){
+                localStorage.setItem("star",JSON.stringify(el))
+                disname()
+            })
+            div.append(p,p1)
+            maindiv.append(div,p2)
+            cont.append(maindiv)
+        });
+    }
+function disname(){
+    window.location.href = "char.html"
+}
+   async function main(){
+       let data = await getData();
+       append(data);
+    }
+
+    function debouncing(func,delay){
+        if(id){
+            clearTimeout(id)
+        }
+      id = setTimeout(function(){
+        func()
+       },delay);
+    }
+</script>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;1,300&family=Poppins:ital,wght@0,200;1,200&display=swap" rel="stylesheet">
+    <style>
+          body{
+            background-image: url(https://upload.wikimedia.org/wikipedia/commons/d/d6/WarpTrails001.gif);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .main{
+            /* border: 2px solid red; */
+            width:37%;
+            margin: auto;
+            display: flex;
+            /* height: 300px; */
+            justify-content: space-between;
+        }
+        .main>div{
+            border: 2px solid #FFEB00;
+            width:43%;
+            text-align: center;
+            color: #FFEB00;
+            
+        }
+        #name{
+            width:25%;
+            margin: auto;
+            color: #FFEB00;
+            margin-top: 140px;
+            margin-bottom: 20px;
+            font-family: poppins;
+        }
+        #main1{
+            padding: 8px;
+            border-radius: 10px;
+            font-family: poppins;
+        }
+        #main1:hover{
+            color: white;
+            border: 2px solid white;
+            cursor: pointer;
+        }
+        #main2{
+            padding: 8px;
+            border-radius: 10px;
+            font-family: poppins;
+        }
+        #main2:hover{
+            color: white;
+            border: 2px solid white;
+            cursor: pointer;
+        }
+        button{
+            border: none;
+            width:10%;
+            display: block;
+            margin: auto;
+            margin-top: 50px;
+            font-size: 20px;
+            padding: 10px;
+            background: transparent;
+            color: #FFEB00;
+            border: 2px solid #FFEB00;
+            border-radius: 10px;
+            font-family: poppins;
+           
+        }
+        button:hover{
+            color: white;
+            border: 2px solid white;
+            cursor: pointer;
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="name"></h1>
+    <div class="main">
+        <div id="main1">
+            <!-- <h1>Personal Info</h1>
+            <p>birth</p>
+            <p>gender</p>
+            <p>height</p> -->
+        </div>
+        <div id="main2">
+
+        </div>
+    </div>
+    <a href="index.html"><button>Go Back</button></a>
+</body>
+</html>
+<script>
+    var data = JSON.parse(localStorage.getItem("star"))
+
+    function append(){
+        // console.log(data)
+    
+      var cont = document.getElementById("main1")
+      document.getElementById("name").innerText = data.name
+      var h1 = document.createElement("h1")
+      h1.innerText = "Personal Info"
+      var p1 = document.createElement("p")
+      p1.innerText = `Birth Year : ${data.birth_year}`
+      var p2 = document.createElement("p")
+      p2.innerText = `Gender : ${data.gender}`
+      var p3 = document.createElement("p")
+      p3.innerText = `Height : ${data.height}`
+      cont.append(h1,p1,p2,p3)
+    }
+    function append1(){
+        // console.log(data)
+        var cont = document.getElementById("main2")
+      var h1 = document.createElement("h1")
+      document.getElementById("name").innerText = data.name
+      h1.innerText = "Anatomy"
+      var p1 = document.createElement("p")
+      p1.innerText = `Eye Color : ${data.eye_color}`
+      var p2 = document.createElement("p")
+      p2.innerText = `Mass : ${data.mass}`
+      var p3 = document.createElement("p")
+      p3.innerText = `Hair Color : ${data.hair_color}`
+      cont.append(h1,p1,p2,p3)
+    }
+    append()
+append1()
+</script>
